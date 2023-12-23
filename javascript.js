@@ -4,7 +4,7 @@
 
 const choice = ["rock", "paper", "scissors"];
 let playerSelection = prompt(
-  "Incorrect input. Please chose a selection: rock, paper, scissors"
+  "Please chose a selection: rock, paper, scissors"
 ).toLowerCase();
 
 while (!choice.includes(playerSelection)) {
