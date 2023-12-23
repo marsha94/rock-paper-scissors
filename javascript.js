@@ -9,7 +9,7 @@ let playerSelection = prompt(
 
 while (!choice.includes(playerSelection)) {
   playerSelection = prompt(
-    "Incorrect input. Please chose a selection: rock, paper, scissors"
+    "Please chose a selection: rock, paper, scissors"
   ).toLowerCase();
 }
 
@@ -41,4 +41,4 @@ function playRound(playerSelection, computerSelection) {
   return result;
 }
 
-console.log(playRound(playerSelection, computerSelection));
+window.alert(playRound(playerSelection, computerSelection));
