@@ -4,14 +4,26 @@
 
 const choice = ["rock", "paper", "scissors"];
 let playerSelection = prompt(
-  "Incorrect input. Please chose a selection: rock, paper, scissors"
+  "Please chose a selection: rock, paper, scissors"
 ).toLowerCase();
 
 while (!choice.includes(playerSelection)) {
   playerSelection = prompt(
-    "Incorrect input. Please chose a selection: rock, paper, scissors"
+    "Please chose a selection: rock, paper, scissors"
   ).toLowerCase();
 }
+
+// while (
+//   !(
+//     playerSelection === "rock" ||
+//     playerSelection === "paper" ||
+//     playerSelection === "scissors"
+//   )
+// ) {
+//   playerSelection = prompt(
+//     "Please chose a selection: rock, paper, scissors"
+//   ).toLowerCase();
+// }
 
 let computerSelection = getComputerChoice();
 function getComputerChoice() {
@@ -25,7 +37,7 @@ function playRound(playerSelection, computerSelection) {
     result = "It's a draw. ";
   } else if (
     (playerSelection === "rock" && computerSelection === "scissors") ||
-    (playerSelection === "paper" && computerSelection === "rocks") ||
+    (playerSelection === "paper" && computerSelection === "rock") ||
     (playerSelection === "scissors" && computerSelection === "paper")
   ) {
     result = `You Win! ${
@@ -41,4 +53,4 @@ function playRound(playerSelection, computerSelection) {
   return result;
 }
 
-console.log(playRound(playerSelection, computerSelection));
+window.alert(playRound(playerSelection, computerSelection));
