@@ -1,56 +1,62 @@
-// * Interface: No interface
-// * Input: Prompt user for choice (rock, paper, scissors)
-// * Output: Win, lose, draw. Depends on user and computer choice
+let playerCurrentPoints = 0;
+let computerCurrentPoints = 0;
+let round = 1;
+const buttons = document.querySelector("[data-info='button-container']");
+const roundInfo = document.querySelector("[data-info='result']");
+buttons.addEventListener("click", playRound);
 
-const choice = ["rock", "paper", "scissors"];
-let playerSelection = prompt(
-  "Please chose a selection: rock, paper, scissors"
-).toLowerCase();
-
-while (!choice.includes(playerSelection)) {
-  playerSelection = prompt(
-    "Please chose a selection: rock, paper, scissors"
-  ).toLowerCase();
-}
-
-// while (
-//   !(
-//     playerSelection === "rock" ||
-//     playerSelection === "paper" ||
-//     playerSelection === "scissors"
-//   )
-// ) {
-//   playerSelection = prompt(
-//     "Please chose a selection: rock, paper, scissors"
-//   ).toLowerCase();
-// }
-
-let computerSelection = getComputerChoice();
-function getComputerChoice() {
+function computerSelection() {
+  const choice = ["rock", "paper", "scissors"];
   choiceIndex = Math.floor(Math.random() * 3);
   return choice[choiceIndex];
 }
 
-function playRound(playerSelection, computerSelection) {
-  let result = "";
-  if (playerSelection === computerSelection) {
-    result = "It's a draw. ";
-  } else if (
-    (playerSelection === "rock" && computerSelection === "scissors") ||
-    (playerSelection === "paper" && computerSelection === "rock") ||
-    (playerSelection === "scissors" && computerSelection === "paper")
-  ) {
-    result = `You Win! ${
-      playerSelection[0].toUpperCase() + playerSelection.slice(1)
-    } beats ${
-      computerSelection[0].toUpperCase() + computerSelection.slice(1)
-    }.`;
-  } else {
-    result = `You Lose! ${
-      computerSelection[0].toUpperCase() + computerSelection.slice(1)
-    } beats ${playerSelection[0].toUpperCase() + playerSelection.slice(1)}.`;
-  }
-  return result;
+function playerSelection(e) {
+  const choice = e.target.getAttribute("data-info");
+  return choice;
 }
 
-window.alert(playRound(playerSelection, computerSelection));
+function results(playerChoice, playerPoints, computerChoice, computerPoints) {
+  let result = "";
+  if (playerChoice === computerChoice) {
+    result = "It's a draw. ";
+  } else if (
+    (playerChoice === "rock" && computerChoice === "scissors") ||
+    (playerChoice === "paper" && computerChoice === "rock") ||
+    (playerChoice === "scissors" && computerChoice === "paper")
+  ) {
+    result = `You Win! ${
+      playerChoice[0].toUpperCase() + playerChoice.slice(1)
+    } beats ${computerChoice[0].toUpperCase() + computerChoice.slice(1)}.`;
+    playerPoints++;
+  } else {
+    result = `You Lose! ${
+      computerChoice[0].toUpperCase() + computerChoice.slice(1)
+    } beats ${playerChoice[0].toUpperCase() + playerChoice.slice(1)}.`;
+    computerPoints++;
+  }
+
+  return [result, playerPoints, computerPoints];
+}
+
+function playRound(e) {
+  if (playerCurrentPoints == 5 || computerCurrentPoints == 5) {
+    playerCurrentPoints > computerCurrentPoints
+      ? (roundInfo.textContent = `You Win! Player points: ${playerCurrentPoints} Computer points: ${computerCurrentPoints}`)
+      : (roundInfo.textContent = `Computer Win ! Player points: ${playerCurrentPoints} Computer points: ${computerCurrentPoints}`);
+    return;
+  }
+  document.createElement("div");
+  let playerChoice = playerSelection(e);
+  let computerChoice = computerSelection();
+  let roundStanding = results(
+    playerChoice,
+    playerCurrentPoints,
+    computerChoice,
+    computerCurrentPoints
+  );
+  playerCurrentPoints = roundStanding[1];
+  computerCurrentPoints = roundStanding[2];
+
+  roundInfo.textContent = `${roundStanding[0]} Player points: ${playerCurrentPoints} Computer points: ${computerCurrentPoints}\n`;
+}
